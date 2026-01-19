@@ -344,36 +344,36 @@ export class Start extends Phaser.Scene {
         this.circle.clear();
         // page one
         if (this.pageNumber == 1) {
-            this.drawCircle(0.47, 0.9, 8, true);
-            this.drawCircle(0.49, 0.9, 8, false);
-            this.drawCircle(0.51, 0.9, 8, false);
-            this.drawCircle(0.53, 0.9, 8, false);
+            this.drawCircle(-60, 0.9, 8, true);
+            this.drawCircle(-20, 0.9, 8, false);
+            this.drawCircle(20, 0.9, 8, false);
+            this.drawCircle(60, 0.9, 8, false);
         }
         // page two
         else if (this.pageNumber == 2) {
-            this.drawCircle(0.47, 0.9, 8, false)
-            this.drawCircle(0.49, 0.9, 8, true);
-            this.drawCircle(0.51, 0.9, 8, false);
-            this.drawCircle(0.53, 0.9, 8, false);
+            this.drawCircle(-60, 0.9, 8, false)
+            this.drawCircle(-20, 0.9, 8, true);
+            this.drawCircle(20, 0.9, 8, false);
+            this.drawCircle(60, 0.9, 8, false);
         }
         // page three
         else if (this.pageNumber == 3) {
-            this.drawCircle(0.47, 0.9, 8, false);
-            this.drawCircle(0.49, 0.9, 8, false);
-            this.drawCircle(0.51, 0.9, 8, true);
-            this.drawCircle(0.53, 0.9, 8, false);
+            this.drawCircle(-60, 0.9, 8, false);
+            this.drawCircle(-20, 0.9, 8, false);
+            this.drawCircle(20, 0.9, 8, true);
+            this.drawCircle(60, 0.9, 8, false);
         }
         // page four
         else {
-            this.drawCircle(0.47, 0.9, 8, false)
-            this.drawCircle(0.49, 0.9, 8, false);
-            this.drawCircle(0.51, 0.9, 8, false);
-            this.drawCircle(0.53, 0.9, 8, true);
+            this.drawCircle(-60, 0.9, 8, false)
+            this.drawCircle(-20, 0.9, 8, false);
+            this.drawCircle(20, 0.9, 8, false);
+            this.drawCircle(60, 0.9, 8, true);
         }
     }
     // draw circles to show which page on the how to you are on
-    drawCircle(xPct, yPct, radius, filled) {
-        const x = this.scale.width * xPct;
+    drawCircle(xOffset, yPct, radius, filled) {
+        const x = (this.scale.width * 0.5) + xOffset;
         const y = this.scale.height * yPct;
         // check if filled
         if (filled) {
