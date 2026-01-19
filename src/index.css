@@ -1,0 +1,44 @@
+/* src/index.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #427aa1; 
+}
+
+#game-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background: #427aa1;
+}
+
+#emailtext,
+#nametext,
+#title {
+  display: none;
+  position: absolute; /* if you want to position later */
+}
+
+@font-face {
+  font-family: 'ArcadeFont';
+  src: url('./assets/fonts/ArcadeFont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+    font-family: 'ArcadeFont';
+}
+
+
+#title, #askName, #askEmail, #errorName, #errorEmail, input {
+  font-family: 'ArcadeFont', sans-serif;
+}
+
+canvas {
+  display: block;
+}
