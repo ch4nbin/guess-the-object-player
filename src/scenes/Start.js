@@ -9,7 +9,7 @@ export class Start extends Phaser.Scene {
 
     // colors
     this.textColor = '#ebf2fa';
-    this.backgroundColor = '#427aa1';
+    this.backgroundColor = '#021b35';
     this.errorColor = '#990507';
     this.buttonColor = '#064789';
     this.buttonHoverColor = '#085aae';
@@ -28,10 +28,6 @@ export class Start extends Phaser.Scene {
     this.errorEmailRef = data.errorEmailRef;
     this.termsCheckRef = data.termsCheckRef;
     this.termsLabelRef = data.termsLabelRef;
-    this.pageOneRef = data.pageOneRef;
-    this.pageTwoRef = data.pageTwoRef;
-    this.pageThreeRef = data.pageThreeRef;
-    this.pageFourRef = data.pageFourRef;
     this.onStart = data.onStart;
   }
 
@@ -63,10 +59,6 @@ export class Start extends Phaser.Scene {
     this.lastNameText.style.display = 'none';
     this.title.style.display = 'none';
     this.isChecked = false;
-    this.pageOne = this.pageOneRef.current;
-    this.pageTwo = this.pageTwoRef.current;
-    this.pageThree = this.pageThreeRef.current;
-    this.pageFour = this.pageFourRef.current;
 
     // prevent black lines
     this.cameras.main.setBackgroundColor(this.backgroundColor);
@@ -207,7 +199,7 @@ export class Start extends Phaser.Scene {
 
     // Re-scale when the window resizes
     this.scale.on('resize', resizeImage);
-    this.cameras.main.setBackgroundColor('#427aa1');
+    this.cameras.main.setBackgroundColor(this.backgroundColor);
 }
 
     updateArrows() {
@@ -233,27 +225,30 @@ export class Start extends Phaser.Scene {
     positionTermsCheckbox() {
     // place is relative to email box
         const rectEmail = this.emailText.getBoundingClientRect();
+        console.log(rectEmail);
 
-        this.termsCheck.style.position = 'absolute';
-        this.termsCheck.style.left = rectEmail.left + 'px';
-        this.termsCheck.style.top = rectEmail.bottom + 12 + 'px';
-        this.termsCheck.style.display = 'block';
-
-        this.termsCheck.style.scale = '2';
 
         this.termsLabel.innerHTML =
         `I have read and agree to the 
         <a href="https://www.witcontests.com/terms" target="_blank">Terms of Use</a>.
         I agree to receive emails from the NBA.`;
+        this.termsLabel.style.textAlign = 'center';
 
         this.termsLabel.style.position = 'absolute';
-        this.termsLabel.style.left = rectEmail.left + 32 + 'px';
+        this.termsLabel.style.left = rectEmail.left + 10 + 'px';
         this.termsLabel.style.top = rectEmail.bottom + 10 + 'px';
 
         this.termsLabel.style.display = 'block';
         this.termsLabel.style.color = this.textColor;
         this.termsLabel.style.width = "300px";
         this.termsLabel.style.lineHeight = '1.5'; 
+
+        this.termsCheck.style.position = 'absolute';
+        this.termsCheck.style.left = rectEmail.left - (0.5 * this.scale.width + 'px');
+        this.termsCheck.style.top = rectEmail.bottom + 140 + 'px';
+        this.termsCheck.style.display = 'block';
+
+        this.termsCheck.style.scale = '2';
 
     }
 
@@ -389,21 +384,6 @@ export class Start extends Phaser.Scene {
             this.circle.strokeCircle(x, y, radius);
         }
 
-    }
-
-    printText() {
-        if (this.pageNumber == 1) {
-
-        }
-        else if (this.pageNumber == 2) {
-
-        }
-        else if (this.pageNumber == 3) {
-
-        }
-        else {
-
-        }
     }
 
     // function for before game to get email and and name
@@ -602,7 +582,7 @@ export class Start extends Phaser.Scene {
 
         // error ui first name
         this.errorFirstName.style.position="absolute";
-        this.errorFirstName.innerText = "Error: No First Name"
+        this.errorFirstName.innerText = "No First Name"
         this.errorFirstName.style.fontSize = "18px";
         this.errorFirstName.style.zIndex = "1000"; // to be on top of canvas
         this.errorFirstName.style.left = "50%";
@@ -615,7 +595,7 @@ export class Start extends Phaser.Scene {
 
         // error ui last name
         this.errorLastName.style.position="absolute";
-        this.errorLastName.innerText = "Error: No Last Name"
+        this.errorLastName.innerText = "No Last Name"
         this.errorLastName.style.fontSize = "18px";
         this.errorLastName.style.zIndex = "1000"; // to be on top of canvas
         this.errorLastName.style.left = "50%";
@@ -628,7 +608,7 @@ export class Start extends Phaser.Scene {
 
         // error ui email
         this.errorEmail.style.position="absolute";
-        this.errorEmail.innerText = "Error: Improper Email"
+        this.errorEmail.innerText = "Improper Email"
         this.errorEmail.style.fontSize = "18px";
         this.errorEmail.style.zIndex = "1000"; // to be on top of canvas
         this.errorEmail.style.left = "50%";

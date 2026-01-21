@@ -15,10 +15,6 @@ export default function Intro({ onStart }) {
   const errorFirstNameRef = useRef(null);
   const errorLastNameRef = useRef(null);
   const errorEmailRef = useRef(null);
-  const pageOneRef = useRef(null);
-  const pageTwoRef = useRef(null);
-  const pageThreeRef = useRef(null);
-  const pageFourRef = useRef(null);
   const termsCheckRef = useRef(null);
   const termsLabelRef = useRef(null);
 
@@ -48,10 +44,6 @@ export default function Intro({ onStart }) {
       errorFirstNameRef,
       errorLastNameRef,
       errorEmailRef,
-      pageOneRef,
-      pageTwoRef,
-      pageThreeRef,
-      pageFourRef,
       termsCheckRef,
       termsLabelRef,
       onStart, 
@@ -88,12 +80,7 @@ export default function Intro({ onStart }) {
         <div ref={errorFirstNameRef} id="errorFirstName"></div>
         <div ref={errorLastNameRef} id="errorLastName"></div>
         <div ref={errorEmailRef} id="errorEmail"></div>
-
-        <div ref={pageOneRef} id="pageOne"></div>
-        <div ref={pageTwoRef} id="pageTwo"></div>
-        <div ref={pageThreeRef} id="pageThree"></div>
-        <div ref={pageFourRef} id="pageFour"></div>
-
+        
         <input ref={termsCheckRef} id="termsCheck" type="checkbox" />
         <label ref={termsLabelRef} htmlFor="termsCheck" id="termsLabel"></label>
     </div>
