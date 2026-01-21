@@ -509,7 +509,7 @@ export default function Game({ profile, onExitToIntro }) {
 
           {gameOver && (
             <button className="playAgain" onClick={() => startNewRound()}>
-              Play Again
+              See Leaderboard
             </button>
           )}
         </div>
