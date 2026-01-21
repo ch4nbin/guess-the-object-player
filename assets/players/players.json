@@ -1,0 +1,1024 @@
+{
+  "players": [
+    {
+      "id": "nikola_jokic",
+      "name": "Nikola Jokic",
+      "conference": "West",
+      "team": "DEN",
+      "position": ["C"],
+      "number": 15,
+      "age": 30,
+      "image": "public/assets/players/images/nikola_jokic.png"
+    },
+    {
+      "id": "shai_gilgeous_alexander",
+      "name": "Shai Gilgeous-Alexander",
+      "conference": "West",
+      "team": "OKC",
+      "position": ["G"],
+      "number": 2,
+      "age": 27,
+      "image": "public/assets/players/images/shai_gilgeous_alexander.png"
+    },
+    {
+      "id": "luka_doncic",
+      "name": "Luka Doncic",
+      "conference": "West",
+      "team": "LAL",
+      "position": ["G"],
+      "number": 77,
+      "age": 26,
+      "image": "public/assets/players/images/luka_doncic.png"
+    },
+    {
+      "id": "giannis_antetokounmpo",
+      "name": "Giannis Antetokounmpo",
+      "conference": "East",
+      "team": "MIL",
+      "position": ["F"],
+      "number": 34,
+      "age": 31,
+      "image": "public/assets/players/images/giannis_antetokounmpo.png"
+    },
+    {
+      "id": "victor_wembanyama",
+      "name": "Victor Wembanyama",
+      "conference": "West",
+      "team": "SAS",
+      "position": ["C"],
+      "number": 1,
+      "age": 22,
+      "image": "public/assets/players/images/victor_wembanyama.png"
+    },
+    {
+      "id": "steph_curry",
+      "name": "Stephen Curry",
+      "conference": "West",
+      "team": "GSW",
+      "position": ["G"],
+      "number": 30,
+      "age": 37,
+      "image": "public/assets/players/images/steph_curry.png"
+    },
+    {
+      "id": "anthony_edwards",
+      "name": "Anthony Edwards",
+      "conference": "West",
+      "team": "MIN",
+      "position": ["G"],
+      "number": 5,
+      "age": 24,
+      "image": "public/assets/players/images/anthony_edwards.png"
+    },
+    {
+      "id": "donovan_mitchell",
+      "name": "Donovan Mitchell",
+      "conference": "East",
+      "team": "CLE",
+      "position": ["G"],
+      "number": 45,
+      "age": 29,
+      "image": "public/assets/players/images/donovan_mitchell.png"
+    },
+    {
+      "id": "jayson_tatum",
+      "name": "Jayson Tatum",
+      "conference": "East",
+      "team": "BOS",
+      "position": ["G", "F"],
+      "number": 0,
+      "age": 27,
+      "image": "public/assets/players/images/jayson_tatum.png"
+    },
+    {
+      "id": "jalen_brunson",
+      "name": "Jalen Brunson",
+      "conference": "East",
+      "team": "NYK",
+      "position": ["G"],
+      "number": 11,
+      "age": 29,
+      "image": "public/assets/players/images/jalen_brunson.png"
+    },
+    {
+      "id": "cade_cunningham",
+      "name": "Cade Cunningham",
+      "conference": "East",
+      "team": "DET",
+      "position": ["G"],
+      "number": 2,
+      "age": 24,
+      "image": "public/assets/players/images/cade_cunningham.png"
+    },
+    {
+      "id": "kevin_durant",
+      "name": "Kevin Durant",
+      "conference": "West",
+      "team": "HOU",
+      "position": ["F"],
+      "number": 7,
+      "age": 37,
+      "image": "public/assets/players/images/kevin_durant.png"
+    },
+    {
+      "id": "alperen_sengun",
+      "name": "Alperen Sengun",
+      "conference": "West",
+      "team": "HOU",
+      "position": ["C"],
+      "number": 28,
+      "age": 23,
+      "image": "public/assets/players/images/alperen_sengun.png"
+    },
+    {
+      "id": "jaylen_brown",
+      "name": "Jaylen Brown",
+      "conference": "East",
+      "team": "BOS",
+      "position": ["G", "F"],
+      "number": 7,
+      "age": 29,
+      "image": "public/assets/players/images/jaylen_brown.png"
+    },
+    {
+      "id": "devin_booker",
+      "name": "Devin Booker",
+      "conference": "West",
+      "team": "PHX",
+      "position": ["G"],
+      "number": 1,
+      "age": 29,
+      "image": "public/assets/players/images/devin_booker.png"
+    },
+    {
+      "id": "tyrese_haliburton",
+      "name": "Tyrese Haliburton",
+      "conference": "East",
+      "team": "IND",
+      "position": ["G"],
+      "number": 0,
+      "age": 25,
+      "image": "public/assets/players/images/tyrese_haliburton.png"
+    },
+    {
+      "id": "tyrese_maxey",
+      "name": "Tyrese Maxey",
+      "conference": "East",
+      "team": "PHI",
+      "position": ["G"],
+      "number": 0,
+      "age": 25,
+      "image": "public/assets/players/images/tyrese_maxey.png"
+    },
+    {
+      "id": "jalen_williams",
+      "name": "Jalen Williams",
+      "conference": "West",
+      "team": "OKC",
+      "position": ["G", "F"],
+      "number": 8,
+      "age": 24,
+      "image": "public/assets/players/images/jalen_williams.png"
+    },
+    {
+      "id": "jalen_johnson",
+      "name": "Jalen Johnson",
+      "conference": "East",
+      "team": "ATL",
+      "position": ["F"],
+      "number": 1,
+      "age": 24,
+      "image": "public/assets/players/images/jalen_johnson.png"
+    },
+    {
+      "id": "kawhi_leonard",
+      "name": "Kawhi Leonard",
+      "conference": "West",
+      "team": "LAC",
+      "position": ["F"],
+      "number": 2,
+      "age": 34,
+      "image": "public/assets/players/images/kawhi_leonard.png"
+    },
+    {
+      "id": "evan_mobley",
+      "name": "Evan Mobley",
+      "conference": "East",
+      "team": "CLE",
+      "position": ["F"],
+      "number": 4,
+      "age": 24,
+      "image": "public/assets/players/images/evan_mobley.png"
+    },
+    {
+      "id": "karl_anthony_towns",
+      "name": "Karl-Anthony Towns",
+      "conference": "East",
+      "team": "NYK",
+      "position": ["F", "C"],
+      "number": 32,
+      "age": 30,
+      "image": "public/assets/players/images/karl_anthony_towns.png"
+    },
+    {
+      "id": "chet_holmgren",
+      "name": "Chet Holmgren",
+      "conference": "West",
+      "team": "OKC",
+      "position": ["F"],
+      "number": 7,
+      "age": 23,
+      "image": "public/assets/players/images/chet_holmgren.png"
+    },
+    {
+      "id": "anthony_davis",
+      "name": "Anthony Davis",
+      "conference": "West",
+      "team": "DAL",
+      "position": ["F"],
+      "number": 3,
+      "age": 32,
+      "image": "public/assets/players/images/anthony_davis.png"
+    },
+    {
+      "id": "jamal_murray",
+      "name": "Jamal Murray",
+      "conference": "West",
+      "team": "DEN",
+      "position": ["G"],
+      "number": 27,
+      "age": 28,
+      "image": "public/assets/players/images/jamal_murray.png"
+    },
+    {
+      "id": "lebron_james",
+      "name": "LeBron James",
+      "conference": "West",
+      "team": "LAL",
+      "position": ["F"],
+      "number": 23,
+      "age": 41,
+      "image": "public/assets/players/images/lebron_james.png"
+    },
+    {
+      "id": "deni_avdija",
+      "name": "Deni Avdija",
+      "conference": "West",
+      "team": "POR",
+      "position": ["F"],
+      "number": 8,
+      "age": 25,
+      "image": "public/assets/players/images/deni_avdija.png"
+    },
+    {
+      "id": "james_harden",
+      "name": "James Harden",
+      "conference": "West",
+      "team": "LAC",
+      "position": ["G"],
+      "number": 1,
+      "age": 36,
+      "image": "public/assets/players/images/james_harden.png"
+    },
+    {
+      "id": "pascal_siakam",
+      "name": "Pascal Siakam",
+      "conference": "East",
+      "team": "IND",
+      "position": ["F"],
+      "number": 43,
+      "age": 31,
+      "image": "public/assets/players/images/pascal_siakam.png"
+    },
+    {
+      "id": "scottie_barnes",
+      "name": "Scottie Barnes",
+      "conference": "East",
+      "team": "TOR",
+      "position": ["G", "F"],
+      "number": 4,
+      "age": 24,
+      "image": "public/assets/players/images/scottie_barnes.png"
+    },
+    {
+      "id": "lauri_markkanen",
+      "name": "Lauri Markkanen",
+      "conference": "West",
+      "team": "UTA",
+      "position": ["F", "C"],
+      "number": 23,
+      "age": 28,
+      "image": "public/assets/players/images/lauri_markkanen.png"
+    },
+    {
+      "id": "bam_adebayo",
+      "name": "Bam Adebayo",
+      "conference": "East",
+      "team": "MIA",
+      "position": ["F", "C"],
+      "number": 13,
+      "age": 28,
+      "image": "public/assets/players/images/bam_adebayo.png"
+    },
+    {
+      "id": "austin_reaves",
+      "name": "Austin Reaves",
+      "conference": "West",
+      "team": "LAL",
+      "position": ["G"],
+      "number": 15,
+      "age": 27,
+      "image": "public/assets/players/images/austin_reaves.png"
+    },
+    {
+      "id": "paolo_banchero",
+      "name": "Paolo Banchero",
+      "conference": "East",
+      "team": "ORL",
+      "position": ["F"],
+      "number": 5,
+      "age": 23,
+      "image": "public/assets/players/images/paolo_banchero.png"
+    },
+    {
+      "id": "de_aaron_fox",
+      "name": "De'Aaron Fox",
+      "conference": "West",
+      "team": "SAS",
+      "position": ["G"],
+      "number": 4,
+      "age": 28,
+      "image": "public/assets/players/images/de_aaron_fox.png"
+    },
+    {
+      "id": "jalen_duren",
+      "name": "Jalen Duren",
+      "conference": "East",
+      "team": "DET",
+      "position": ["C"],
+      "number": 0,
+      "age": 22,
+      "image": "public/assets/players/images/jalen_duren.png"
+    },
+    {
+      "id": "jimmy_butler",
+      "name": "Jimmy Butler",
+      "conference": "West",
+      "team": "GSW",
+      "position": ["F"],
+      "number": 10,
+      "age": 36,
+      "image": "public/assets/players/images/jimmy_butler.png"
+    },
+    {
+      "id": "amen_thompson",
+      "name": "Amen Thompson",
+      "conference": "West",
+      "team": "HOU",
+      "position": ["G"],
+      "number": 1,
+      "age": 22,
+      "image": "public/assets/players/images/amen_thompson.png"
+    },
+    {
+      "id": "julius_randle",
+      "name": "Julius Randle",
+      "conference": "West",
+      "team": "MIN",
+      "position": ["F", "C"],
+      "number": 30,
+      "age": 31,
+      "image": "public/assets/players/images/julius_randle.png"
+    },
+    {
+      "id": "franz_wagner",
+      "name": "Franz Wagner",
+      "conference": "East",
+      "team": "ORL",
+      "position": ["F"],
+      "number": 22,
+      "age": 24,
+      "image": "public/assets/players/images/franz_wagner.png"
+    },
+    {
+      "id": "aaron_gordon",
+      "name": "Aaron Gordon",
+      "conference": "West",
+      "team": "DEN",
+      "position": ["F"],
+      "number": 32,
+      "age": 30,
+      "image": "public/assets/players/images/aaron_gordon.png"
+    },
+    {
+      "id": "og_anunoby",
+      "name": "OG Anunoby",
+      "conference": "East",
+      "team": "NYK",
+      "position": ["G", "F"],
+      "number": 8,
+      "age": 28,
+      "image": "public/assets/players/images/og_anunoby.png"
+    },
+    {
+      "id": "domantas_sabonis",
+      "name": "Domantas Sabonis",
+      "conference": "West",
+      "team": "SAC",
+      "position": ["C"],
+      "number": 11,
+      "age": 29,
+      "image": "public/assets/players/images/domantas_sabonis.png"
+    },
+    {
+      "id": "derrick_white",
+      "name": "Derrick White",
+      "conference": "East",
+      "team": "BOS",
+      "position": ["G"],
+      "number": 9,
+      "age": 31,
+      "image": "public/assets/players/images/derrick_white.png"
+    },
+    {
+      "id": "trae_young",
+      "name": "Trae Young",
+      "conference": "East",
+      "team": "ATL",
+      "position": ["G"],
+      "number": 11,
+      "age": 27,
+      "image": "public/assets/players/images/trae_young.png"
+    },
+    {
+      "id": "norman_powell",
+      "name": "Norman Powell",
+      "conference": "East",
+      "team": "MIA",
+      "position": ["G"],
+      "number": 24,
+      "age": 32,
+      "image": "public/assets/players/images/norman_powell.png"
+    },
+    {
+      "id": "jaren_jackson",
+      "name": "Jaren Jackson",
+      "conference": "West",
+      "team": "MEM",
+      "position": ["C"],
+      "number": 8,
+      "age": 26,
+      "image": "public/assets/players/images/jaren_jackson.png"
+    },
+    {
+      "id": "desmond_bane",
+      "name": "Desmond Bane",
+      "conference": "East",
+      "team": "ORL",
+      "position": ["G"],
+      "number": 3,
+      "age": 27,
+      "image": "public/assets/players/images/desmond_bane.png"
+    },
+    {
+      "id": "stephon_castle",
+      "name": "Stephon Castle",
+      "conference": "West",
+      "team": "SAS",
+      "position": ["G"],
+      "number": 5,
+      "age": 21,
+      "image": "public/assets/players/images/stephon_castle.png"
+    },
+    {
+      "id": "ivica_zubac",
+      "name": "Ivica Zubac",
+      "conference": "West",
+      "team": "LAC",
+      "position": ["C"],
+      "number": 40,
+      "age": 28,
+      "image": "public/assets/players/images/ivica_zubac.png"
+    },
+    {
+      "id": "michael_porter",
+      "name": "Michael Porter",
+      "conference": "East",
+      "team": "BRK",
+      "position": ["F"],
+      "number": 17,
+      "age": 27,
+      "image": "public/assets/players/images/michael_porter.png"
+    },
+    {
+      "id": "rudy_gobert",
+      "name": "Rudy Gobert",
+      "conference": "West",
+      "team": "MIN",
+      "position": ["C"],
+      "number": 27,
+      "age": 33,
+      "image": "public/assets/players/images/rudy_gobert.png"
+    },
+    {
+      "id": "jaden_mcdaniels",
+      "name": "Jaden McDaniels",
+      "conference": "West",
+      "team": "MIN",
+      "position": ["F"],
+      "number": 3,
+      "age": 25,
+      "image": "public/assets/players/images/jaden_mcdaniels.png"
+    },
+    {
+      "id": "mikal_bridges",
+      "name": "Mikal Bridges",
+      "conference": "East",
+      "team": "NYK",
+      "position": ["G", "F"],
+      "number": 25,
+      "age": 29,
+      "image": "public/assets/players/images/mikal_bridges.png"
+    },
+    {
+      "id": "brandon_ingram",
+      "name": "Brandon Ingram",
+      "conference": "East",
+      "team": "TOR",
+      "position": ["F"],
+      "number": 3,
+      "age": 28,
+      "image": "public/assets/players/images/brandon_ingram.png"
+    },
+    {
+      "id": "lamelo_ball",
+      "name": "LaMelo Ball",
+      "conference": "East",
+      "team": "CHA",
+      "position": ["G"],
+      "number": 1,
+      "age": 24,
+      "image": "public/assets/players/images/lamelo_ball.png"
+    },
+    {
+      "id": "josh_giddey",
+      "name": "Josh Giddey",
+      "conference": "East",
+      "team": "CHI",
+      "position": ["G"],
+      "number": 3,
+      "age": 23,
+      "image": "public/assets/players/images/josh_giddey.png"
+    },
+    {
+      "id": "jalen_suggs",
+      "name": "Jalen Suggs",
+      "conference": "East",
+      "team": "ORL",
+      "position": ["G"],
+      "number": 4,
+      "age": 24,
+      "image": "public/assets/players/images/jalen_suggs.png"
+    },
+    {
+      "id": "trey_murphy",
+      "name": "Trey Murphy",
+      "conference": "West",
+      "team": "NOP",
+      "position": ["F"],
+      "number": 25,
+      "age": 25,
+      "image": "public/assets/players/images/trey_murphy.png"
+    },
+    {
+      "id": "cooper_flagg",
+      "name": "Cooper Flagg",
+      "conference": "West",
+      "team": "DAL",
+      "position": ["F"],
+      "number": 32,
+      "age": 19,
+      "image": "public/assets/players/images/cooper_flagg.png"
+    },
+    {
+      "id": "kon_knueppel",
+      "name": "Kon Knueppel",
+      "conference": "East",
+      "team": "CHA",
+      "position": ["F"],
+      "number": 7,
+      "age": 20,
+      "image": "public/assets/players/images/kon_knueppel.png"
+    },
+    {
+      "id": "tyler_herro",
+      "name": "Tyler Herro",
+      "conference": "East",
+      "team": "MIA",
+      "position": ["G"],
+      "number": 14,
+      "age": 25,
+      "image": "public/assets/players/images/tyler_herro.png"
+    },
+    {
+      "id": "darius_garland",
+      "name": "Darius Garland",
+      "conference": "East",
+      "team": "CLE",
+      "position": ["G"],
+      "number": 10,
+      "age": 25,
+      "image": "public/assets/players/images/darius_garland.png"
+    },
+    {
+      "id": "draymond_green",
+      "name": "Draymond Green",
+      "conference": "West",
+      "team": "GSW",
+      "position": ["F"],
+      "number": 23,
+      "age": 35,
+      "image": "public/assets/players/images/draymond_green.png"
+    },
+    {
+      "id": "jrue_holiday",
+      "name": "Jrue Holiday",
+      "conference": "West",
+      "team": "POR",
+      "position": ["G"],
+      "number": 5,
+      "age": 35,
+      "image": "public/assets/players/images/jrue_holiday.png"
+    },
+    {
+      "id": "isaiah_hartenstein",
+      "name": "Isaiah Hartenstein",
+      "conference": "West",
+      "team": "OKC",
+      "position": ["C"],
+      "number": 55,
+      "age": 27,
+      "image": "public/assets/players/images/isaiah_hartenstein.png"
+    },
+    {
+      "id": "joel_embiid",
+      "name": "Joel Embiid",
+      "conference": "East",
+      "team": "PHI",
+      "position": ["F", "C"],
+      "number": 21,
+      "age": 31,
+      "image": "public/assets/players/images/joel_embiid.png"
+    },
+    {
+      "id": "andrew_nembhard",
+      "name": "Andrew Nembhard",
+      "conference": "East",
+      "team": "IND",
+      "position": ["G", "F"],
+      "number": 2,
+      "age": 26,
+      "image": "public/assets/players/images/andrew_nembhard.png"
+    },
+    {
+      "id": "alex_caruso",
+      "name": "Alex Caruso",
+      "conference": "West",
+      "team": "OKC",
+      "position": ["G"],
+      "number": 9,
+      "age": 31,
+      "image": "public/assets/players/images/alex_caruso.png"
+    },
+    {
+      "id": "dillon_brooks",
+      "name": "Dillon Brooks",
+      "conference": "West",
+      "team": "PHX",
+      "position": ["G", "F"],
+      "number": 3,
+      "age": 29,
+      "image": "public/assets/players/images/dillon_brooks.png"
+    },
+    {
+      "id": "ja_morant",
+      "name": "Ja Morant",
+      "conference": "West",
+      "team": "MEM",
+      "position": ["G"],
+      "number": 12,
+      "age": 26,
+      "image": "public/assets/players/images/ja_morant.png"
+    },
+    {
+      "id": "jarrett_allen",
+      "name": "Jarrett Allen",
+      "conference": "East",
+      "team": "CLE",
+      "position": ["C"],
+      "number": 31,
+      "age": 27,
+      "image": "public/assets/players/images/jarrett_allen.png"
+    },
+    {
+      "id": "zion_williamson",
+      "name": "Zion Williamson",
+      "conference": "West",
+      "team": "NOP",
+      "position": ["F"],
+      "number": 1,
+      "age": 25,
+      "image": "public/assets/players/images/zion_williamson.png"
+    },
+    {
+      "id": "zach_lavine",
+      "name": "Zach LaVine",
+      "conference": "West",
+      "team": "SAC",
+      "position": ["G"],
+      "number": 8,
+      "age": 30,
+      "image": "public/assets/players/images/zach_lavine.png"
+    },
+    {
+      "id": "ausar_thompson",
+      "name": "Ausar Thompson",
+      "conference": "East",
+      "team": "DET",
+      "position": ["F"],
+      "number": 9,
+      "age": 22,
+      "image": "public/assets/players/images/ausar_thompson.png"
+    },
+    {
+      "id": "naz_reid",
+      "name": "Naz Reid",
+      "conference": "West",
+      "team": "MIN",
+      "position": ["C"],
+      "number": 11,
+      "age": 26,
+      "image": "public/assets/players/images/naz_reid.png"
+    },
+    {
+      "id": "dyson_daniels",
+      "name": "Dyson Daniels",
+      "conference": "East",
+      "team": "ATL",
+      "position": ["G"],
+      "number": 5,
+      "age": 22,
+      "image": "public/assets/players/images/dyson_daniels.png"
+    },
+    {
+      "id": "coby_white",
+      "name": "Coby White",
+      "conference": "East",
+      "team": "CHI",
+      "position": ["G"],
+      "number": 0,
+      "age": 25,
+      "image": "public/assets/players/images/coby_white.png"
+    },
+    {
+      "id": "payton_pritchard",
+      "name": "Payton Pritchard",
+      "conference": "East",
+      "team": "BOS",
+      "position": ["G"],
+      "number": 11,
+      "age": 27,
+      "image": "public/assets/players/images/payton_pritchard.png"
+    },
+    {
+      "id": "josh_hart",
+      "name": "Josh Hart",
+      "conference": "East",
+      "team": "NYK",
+      "position": ["F"],
+      "number": 3,
+      "age": 30,
+      "image": "public/assets/players/images/josh_hart.png"
+    },
+    {
+      "id": "keyonte_george",
+      "name": "Keyonte George",
+      "conference": "West",
+      "team": "UTA",
+      "position": ["G"],
+      "number": 3,
+      "age": 22,
+      "image": "public/assets/players/images/keyonte_george.png"
+    },
+    {
+      "id": "rj_barrett",
+      "name": "RJ Barrett",
+      "conference": "East",
+      "team": "TOR",
+      "position": ["G", "F"],
+      "number": 9,
+      "age": 25,
+      "image": "public/assets/players/images/rj_barrett.png"
+    },
+    {
+      "id": "demar_derozan",
+      "name": "DeMar DeRozan",
+      "conference": "West",
+      "team": "SAC",
+      "position": ["G", "F"],
+      "number": 10,
+      "age": 36,
+      "image": "public/assets/players/images/demar_derozan.png"
+    },
+    {
+      "id": "tari_eason",
+      "name": "Tari Eason",
+      "conference": "West",
+      "team": "HOU",
+      "position": ["F"],
+      "number": 17,
+      "age": 24,
+      "image": "public/assets/players/images/tari_eason.png"
+    },
+    {
+      "id": "devin_vassell",
+      "name": "Devin Vassell",
+      "conference": "West",
+      "team": "SAS",
+      "position": ["G"],
+      "number": 24,
+      "age": 25,
+      "image": "public/assets/players/images/devin_vassell.png"
+    },
+    {
+      "id": "cason_wallace",
+      "name": "Cason Wallace",
+      "conference": "West",
+      "team": "OKC",
+      "position": ["G"],
+      "number": 22,
+      "age": 22,
+      "image": "public/assets/players/images/cason_wallace.png"
+    },
+    {
+      "id": "paul_george",
+      "name": "Paul George",
+      "conference": "East",
+      "team": "PHI",
+      "position": ["F"],
+      "number": 8,
+      "age": 35,
+      "image": "public/assets/players/images/paul_george.png"
+    },
+    {
+      "id": "luguentz_dort",
+      "name": "Luguentz Dort",
+      "conference": "West",
+      "team": "OKC",
+      "position": ["G"],
+      "number": 5,
+      "age": 26,
+      "image": "public/assets/players/images/luguentz_dort.png"
+    },
+    {
+      "id": "onyeka_okongwu",
+      "name": "Onyeka Okongwu",
+      "conference": "East",
+      "team": "ATL",
+      "position": ["C"],
+      "number": 17,
+      "age": 25,
+      "image": "public/assets/players/images/onyeka_okongwu.png"
+    },
+    {
+      "id": "jaime_jaquez",
+      "name": "Jaime Jaquez",
+      "conference": "East",
+      "team": "MIA",
+      "position": ["F"],
+      "number": 11,
+      "age": 24,
+      "image": "public/assets/players/images/jaime_jaquez.png"
+    },
+    {
+      "id": "ajay_mitchell",
+      "name": "Ajay Mitchell",
+      "conference": "West",
+      "team": "OKC",
+      "position": ["G"],
+      "number": 25,
+      "age": 23,
+      "image": "public/assets/players/images/ajay_mitchell.png"
+    },
+    {
+      "id": "ryan_rollins",
+      "name": "Ryan Rollins",
+      "conference": "East",
+      "team": "MIL",
+      "position": ["G"],
+      "number": 13,
+      "age": 23,
+      "image": "public/assets/players/images/ryan_rollins.png"
+    },
+    {
+      "id": "alex_sarr",
+      "name": "Alex Sarr",
+      "conference": "East",
+      "team": "WAS",
+      "position": ["C"],
+      "number": 20,
+      "age": 20,
+      "image": "public/assets/players/images/alex_sarr.png"
+    },
+    {
+      "id": "nickeil_alexander_walker",
+      "name": "Nickeil Alexander-Walker",
+      "conference": "East",
+      "team": "ATL",
+      "position": ["G"],
+      "number": 7,
+      "age": 27,
+      "image": "public/assets/players/images/nickeil_alexander_walker.png"
+    },
+    {
+      "id": "derik_queen",
+      "name": "Derik Queen",
+      "conference": "West",
+      "team": "NOP",
+      "position": ["C"],
+      "number": 22,
+      "age": 21,
+      "image": "public/assets/players/images/derik_queen.png"
+    },
+    {
+      "id": "toumani_camara",
+      "name": "Toumani Camara",
+      "conference": "West",
+      "team": "POR",
+      "position": ["F"],
+      "number": 33,
+      "age": 25,
+      "image": "public/assets/players/images/toumani_camara.png"
+    },
+    {
+      "id": "myles_turner",
+      "name": "Myles Turner",
+      "conference": "East",
+      "team": "MIL",
+      "position": ["C"],
+      "number": 3,
+      "age": 29,
+      "image": "public/assets/players/images/myles_turner.png"
+    },
+    {
+      "id": "cameron_johnson",
+      "name": "Cameron Johnson",
+      "conference": "West",
+      "team": "DEN",
+      "position": ["F"],
+      "number": 23,
+      "age": 29,
+      "image": "public/assets/players/images/cameron_johnson.png"
+    },
+    {
+      "id": "mitchell_robinson",
+      "name": "Mitchell Robinson",
+      "conference": "East",
+      "team": "NYK",
+      "position": ["F", "C"],
+      "number": 23,
+      "age": 27,
+      "image": "public/assets/players/images/mitchell_robinson.png"
+    },
+    {
+      "id": "kristaps_porzingis",
+      "name": "Kristaps Porzingis",
+      "conference": "East",
+      "team": "ATL",
+      "position": ["F", "C"],
+      "number": 8,
+      "age": 30,
+      "image": "public/assets/players/images/kristaps_porzingis.png"
+    },
+    {
+      "id": "jabari_smith",
+      "name": "Jabari Smith",
+      "conference": "West",
+      "team": "HOU",
+      "position": ["F"],
+      "number": 10,
+      "age": 22,
+      "image": "public/assets/players/images/jabari_smith.png"
+    },
+    {
+      "id": "reed_sheppard",
+      "name": "Reed Sheppard",
+      "conference": "West",
+      "team": "HOU",
+      "position": ["G"],
+      "number": 15,
+      "age": 21,
+      "image": "public/assets/players/images/reed_sheppard.png"
+    }
+  ]
+}
