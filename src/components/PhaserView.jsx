@@ -6,6 +6,7 @@ export default function PhaserView({ playerId, blurPx }) {
   const containerRef = useRef(null);
   const gameRef = useRef(null);
   const sceneRef = useRef(null);
+  const latestPlayerIdRef = useRef(null);
 
   // Create Phaser game once
   useEffect(() => {
@@ -29,7 +30,9 @@ export default function PhaserView({ playerId, blurPx }) {
     setTimeout(() => {
       const scene = game.scene.keys["PortraitScene"];
       sceneRef.current = scene;
-      if (playerId) scene.showPortrait(playerId);
+      if (latestPlayerIdRef.current) {
+        scene.showPortrait(latestPlayerIdRef.current);
+      }
     }, 0);
 
     return () => {
@@ -43,6 +46,7 @@ export default function PhaserView({ playerId, blurPx }) {
 
   // Update portrait when playerId changes
   useEffect(() => {
+    latestPlayerIdRef.current = playerId;
     if (sceneRef.current && playerId) {
       sceneRef.current.showPortrait(playerId);
     }

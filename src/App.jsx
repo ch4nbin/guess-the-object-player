@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import PhaserView from "./components/PhaserView";
+import GameOverScreen from "./components/GameOverScreen";
+import StartScreenPhaser from "./components/StartScreenPhaser";
 import "./App.css";
 
 import confetti from "canvas-confetti";
@@ -92,6 +94,10 @@ export default function App() {
 
   const [statusMsg, setStatusMsg] = useState("");
   const [gameOver, setGameOver] = useState(false);
+  const [showStart, setShowStart] = useState(true);
+
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [leaderboardStatus, setLeaderboardStatus] = useState("idle"); // idle | loading | error | success
 
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -122,11 +128,11 @@ export default function App() {
     })();
   }, []);
 
-  // Start first round
+  // Start first round after the Phaser start screen completes
   useEffect(() => {
-    if (players.length && !target) startNewRound(players);
+    if (players.length && !target && !showStart) startNewRound(players);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [players]);
+  }, [players, showStart]);
 
   useEffect(() => {
     function onDocMouseDown(e) {
@@ -150,7 +156,9 @@ export default function App() {
   }, [activeIndex, showSuggestions, suggestions]);
 
   useEffect(() => {
-    // Start stopwatch immediately on first render
+    if (showStart) return;
+    if (timerIntervalRef.current) return;
+
     timerStartRef.current = Date.now();
     setElapsedSec(0);
 
@@ -165,7 +173,7 @@ export default function App() {
         timerIntervalRef.current = null;
       }
     };
-  }, []);
+  }, [showStart]);
 
   useEffect(() => {
     if (gameOver && timerIntervalRef.current) {
@@ -179,6 +187,57 @@ export default function App() {
     const step = Math.min(rows.length, BLUR_LEVELS.length - 1);
     return BLUR_LEVELS[step];
   }, [rows.length, gameOver]);
+
+  const didWin = useMemo(() => {
+    if (!gameOver || rows.length === 0) return false;
+    return Boolean(rows[rows.length - 1]?.feedback?.nameMatch);
+  }, [gameOver, rows]);
+
+  async function fetchLeaderboard() {
+    setLeaderboardStatus("loading");
+    try {
+      const res = await fetch("/api/leaderboard");
+      if (!res.ok) throw new Error("Leaderboard fetch failed");
+      const data = await res.json();
+      const list = Array.isArray(data)
+        ? data
+        : data?.entries || data?.leaderboard || [];
+      setLeaderboard(list);
+      setLeaderboardStatus("success");
+      return true;
+    } catch (err) {
+      setLeaderboard([]);
+      setLeaderboardStatus("error");
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    if (!gameOver) return;
+    fetchLeaderboard().catch(() => {});
+  }, [gameOver]);
+
+  async function submitScore(email, consent) {
+    if (!target) return;
+    const payload = {
+      email,
+      consent,
+      guesses: rows.length,
+      elapsedSec,
+    };
+
+    const res = await fetch("/api/leaderboard", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      throw new Error("Score submit failed");
+    }
+
+    await fetchLeaderboard();
+  }
 
   function hintInInput(message, kind = "error", ms = 1400) {
     setGuessText("");              // clear whatever they typed
@@ -420,132 +479,148 @@ export default function App() {
   }
 
   return (
-    <div className="page">
-      <div className="left card arcadeFrame">
-        <div className="arcadeContent">
-          <h2>Guesses</h2>
-          <table>
-            <thead>
-              <tr>
-                <th style={{ width: "26%" }}>Name</th>
-                <th style={{ width: "12%" }}>Conf</th>
-                <th style={{ width: "10%" }}>Team</th>
-                <th style={{ width: "10%" }}>Pos</th>
-                <th style={{ width: "12%" }}>No.</th>
-                <th style={{ width: "16%" }}>Age</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.from({ length: MAX_GUESSES }).map((_, i) => {
-                const row = rows[i];
-                if (!row) {
-                  return (
-                    <tr key={i}>
-                      <td className="empty">—</td>
-                      <td className="empty">—</td>
-                      <td className="empty">—</td>
-                      <td className="empty">—</td>
-                      <td className="empty">—</td>
-                      <td className="empty">—</td>
-                    </tr>
-                  );
-                }
-
-                const { player, feedback } = row;
-                const posLabel = Array.isArray(player.position) ? player.position.join("/") : player.position;
-
-                return (
-                  <tr
-                    key={i}
-                    className={row.isNew ? "guessRow isNew" : "guessRow"}
-                  >
-                    <td><Badge kind={feedback.nameMatch ? "ok" : "no"} icon={feedback.nameMatch ? "✓" : "✗"} text={player.name} className="badgeAnim" /></td>
-                    <td><Badge kind={feedback.conferenceMatch ? "ok" : "no"} icon={feedback.conferenceMatch ? "✓" : "✗"} text={player.conference} className="badgeAnim" /></td>
-                    <td><Badge kind={feedback.teamMatch ? "ok" : "no"} icon={feedback.teamMatch ? "✓" : "✗"} text={player.team} className="badgeAnim" /></td>
-                    <td><Badge kind={feedback.positionMatch ? "ok" : "no"} icon={feedback.positionMatch ? "✓" : "✗"} text={posLabel} className="badgeAnim" /></td>
-                    <td><TriBadge value={player.number} hint={feedback.numberHint} className="badgeAnim" /></td>
-                    <td><TriBadge value={player.age} hint={feedback.ageHint} className="badgeAnim" /></td>
+    <>
+      {!showStart && (
+        <div className="page">
+          <div className="left card arcadeFrame">
+            <div className="arcadeContent">
+              <h2>Guesses</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th style={{ width: "26%" }}>Name</th>
+                    <th style={{ width: "12%" }}>Conf</th>
+                    <th style={{ width: "10%" }}>Team</th>
+                    <th style={{ width: "10%" }}>Pos</th>
+                    <th style={{ width: "12%" }}>No.</th>
+                    <th style={{ width: "16%" }}>Age</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                </thead>
+                <tbody>
+                  {Array.from({ length: MAX_GUESSES }).map((_, i) => {
+                    const row = rows[i];
+                    if (!row) {
+                      return (
+                        <tr key={i}>
+                          <td className="empty">—</td>
+                          <td className="empty">—</td>
+                          <td className="empty">—</td>
+                          <td className="empty">—</td>
+                          <td className="empty">—</td>
+                          <td className="empty">—</td>
+                        </tr>
+                      );
+                    }
 
-      <div className="right">
-        <div className="rightTop">
-          <div className="autoWrap" ref={autoRef}>
-            <input
-              ref={inputRef}
-              value={guessText}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              placeholder={inputHint}
-              className={inputHintKind === "error" ? "inputError" : ""}
-              disabled={gameOver}
-              autoComplete="off"
-              spellCheck={false}
-            />
+                    const { player, feedback } = row;
+                    const posLabel = Array.isArray(player.position) ? player.position.join("/") : player.position;
 
-            {showSuggestions && !gameOver && suggestions.length > 0 && (
-              <div className="suggestions" ref={suggestionsRef}>
-                {suggestions.map((name, idx) => (
-                  <div
-                    key={name}
-                    ref={(el) => (itemRefs.current[idx] = el)}
-                    className={`suggestionItem ${idx === activeIndex ? "active" : ""}`}
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      chooseSuggestion(name, true);
-                    }}
-                  >
-                    {name}
-                  </div>
-                ))}
-              </div>
-            )}
+                    return (
+                      <tr
+                        key={i}
+                        className={row.isNew ? "guessRow isNew" : "guessRow"}
+                      >
+                        <td><Badge kind={feedback.nameMatch ? "ok" : "no"} icon={feedback.nameMatch ? "✓" : "✗"} text={player.name} className="badgeAnim" /></td>
+                        <td><Badge kind={feedback.conferenceMatch ? "ok" : "no"} icon={feedback.conferenceMatch ? "✓" : "✗"} text={player.conference} className="badgeAnim" /></td>
+                        <td><Badge kind={feedback.teamMatch ? "ok" : "no"} icon={feedback.teamMatch ? "✓" : "✗"} text={player.team} className="badgeAnim" /></td>
+                        <td><Badge kind={feedback.positionMatch ? "ok" : "no"} icon={feedback.positionMatch ? "✓" : "✗"} text={posLabel} className="badgeAnim" /></td>
+                        <td><TriBadge value={player.number} hint={feedback.numberHint} className="badgeAnim" /></td>
+                        <td><TriBadge value={player.age} hint={feedback.ageHint} className="badgeAnim" /></td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          {gameOver && (
-            <button className="playAgain" onClick={() => startNewRound()}>
-              Play Again
+          <div className="right">
+            <div className="rightTop">
+              <div className="autoWrap" ref={autoRef}>
+                <input
+                  ref={inputRef}
+                  value={guessText}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                  placeholder={inputHint}
+                  className={inputHintKind === "error" ? "inputError" : ""}
+                  disabled={gameOver}
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+
+                {showSuggestions && !gameOver && suggestions.length > 0 && (
+                  <div className="suggestions" ref={suggestionsRef}>
+                    {suggestions.map((name, idx) => (
+                      <div
+                        key={name}
+                        ref={(el) => (itemRefs.current[idx] = el)}
+                        className={`suggestionItem ${idx === activeIndex ? "active" : ""}`}
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          chooseSuggestion(name, true);
+                        }}
+                      >
+                        {name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+            </div>
+
+            <div className="phaserWrap" ref={portraitWrapRef}>
+              <PhaserView playerId={target?.id} blurPx={blurPx} />
+            </div>
+          </div>
+
+          {(showTime || gameOver) && (
+            <div className="stopwatch">
+              {formatHMS(elapsedSec)}
+            </div>
+          )}
+
+          {!gameOver && (
+            <button
+              type="button"
+              className="timeToggle"
+              onClick={() => setShowTime((v) => !v)}
+            >
+              {showTime ? "Hide Time" : "Show Time"}
             </button>
           )}
-        </div>
 
-        {gameOver && bannerMsg && (
-          <div key={bannerMsg} className="winBanner">
-            {bannerMsg}
-          </div>
-        )}
+          <img
+            src="/public/assets/wit-logo.png"
+            alt="WIT"
+            className="witLogo"
+          />
 
-        <div className="phaserWrap" ref={portraitWrapRef}>
-          <PhaserView playerId={target?.id} blurPx={blurPx} />
-        </div>
-      </div>
-
-      {(showTime || gameOver) && (
-        <div className="stopwatch">
-          {formatHMS(elapsedSec)}
+          {gameOver && (
+            <GameOverScreen
+              didWin={didWin}
+              target={target}
+              guessesUsed={rows.length}
+              maxGuesses={MAX_GUESSES}
+              timeText={formatHMS(elapsedSec)}
+              bannerMsg={bannerMsg}
+              leaderboard={leaderboard}
+              leaderboardStatus={leaderboardStatus}
+              onSubmitScore={submitScore}
+              onPlayAgain={() => startNewRound()}
+            />
+          )}
         </div>
       )}
 
-      {!gameOver && (
-        <button
-          type="button"
-          className="timeToggle"
-          onClick={() => setShowTime((v) => !v)}
-        >
-          {showTime ? "Hide Time" : "Show Time"}
-        </button>
+      {showStart && (
+        <StartScreenPhaser
+          onStart={() => {
+            setShowStart(false);
+          }}
+        />
       )}
-
-      <img
-        src="/public/assets/wit-logo.png"
-        alt="WIT"
-        className="witLogo"
-      />
-    </div>
+    </>
   );
 }
