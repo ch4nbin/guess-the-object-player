@@ -31,7 +31,7 @@ function App() {
       type: Phaser.AUTO,
       parent: "game-container",
       scene: Start,
-      backgroundColor: '#427aa1',
+      backgroundColor: '#021b35',
       scale: {
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH

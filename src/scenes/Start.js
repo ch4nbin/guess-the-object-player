@@ -9,7 +9,8 @@ export class Start extends Phaser.Scene {
 
     // colors
     this.textColor = '#ebf2fa';
-    this.backgroundColor = '#427aa1';
+    this.backgroundColor = '#021b35';
+    
     this.errorColor = '#990507';
     this.buttonColor = '#064789';
     this.buttonHoverColor = '#085aae';
@@ -204,7 +205,7 @@ export class Start extends Phaser.Scene {
 
     // Re-scale when the window resizes
     this.scale.on('resize', resizeImage);
-    this.cameras.main.setBackgroundColor('#427aa1');
+    this.cameras.main.setBackgroundColor(this.backgroundColor);
 }
 
     updateArrows() {
@@ -593,7 +594,7 @@ export class Start extends Phaser.Scene {
 
         // error ui first name
         this.errorFirstName.style.position="absolute";
-        this.errorFirstName.innerText = "Error: No First Name"
+        this.errorFirstName.innerText = "No First Name"
         this.errorFirstName.style.fontSize = "18px";
         this.errorFirstName.style.zIndex = "1000"; // to be on top of canvas
         this.errorFirstName.style.left = "50%";
@@ -606,7 +607,7 @@ export class Start extends Phaser.Scene {
 
         // error ui last name
         this.errorLastName.style.position="absolute";
-        this.errorLastName.innerText = "Error: No Last Name"
+        this.errorLastName.innerText = "No Last Name"
         this.errorLastName.style.fontSize = "18px";
         this.errorLastName.style.zIndex = "1000"; // to be on top of canvas
         this.errorLastName.style.left = "50%";
@@ -619,7 +620,7 @@ export class Start extends Phaser.Scene {
 
         // error ui email
         this.errorEmail.style.position="absolute";
-        this.errorEmail.innerText = "Error: Improper Email"
+        this.errorEmail.innerText = "Improper Email"
         this.errorEmail.style.fontSize = "18px";
         this.errorEmail.style.zIndex = "1000"; // to be on top of canvas
         this.errorEmail.style.left = "50%";

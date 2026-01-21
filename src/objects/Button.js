@@ -21,14 +21,16 @@ export class Button {
 
             // button is hovered over so change cursor
             this.button.on('pointerover', () => 
-            {this.button.setStyle({backgroundColor: colorHover});});
+            {this.button.setStyle({backgroundColor: colorHover}),
+            this.button.setScale(this.scale + 0.1);});
 
             // button is not in use
             this.button.on('pointerout', () => 
-            {this.button.setStyle({backgroundColor: colorPrimary});});
+            {this.button.setStyle({backgroundColor: colorPrimary}),
+        this.button.setScale(this.scale - 0.1);});
 
         this.button.setScale((window.innerWidth / 900), 2 * (window.innerHeight / 900));
-
+        this.scale = this.button.scale;
         console.log('Button created:', text, x, y);
 
         this.button.setDepth(1000);
