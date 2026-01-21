@@ -16,23 +16,24 @@ export class Start extends Phaser.Scene {
   }
 
   init(data) {
-  this.emailRef = data.emailRef;
-  this.firstNameRef = data.firstNameRef;
-  this.lastNameRef = data.lastNameRef;
-  this.titleRef = data.titleRef;
-  this.firstNameHeaderRef = data.firstNameHeaderRef;
-  this.lastNameHeaderRef = data.lastNameHeaderRef;
-  this.emailHeaderRef = data.emailHeaderRef;
-  this.errorFirstNameRef = data.errorFirstNameRef;
-  this.errorLastNameRef = data.errorLastNameRef;
-  this.errorEmailRef = data.errorEmailRef;
-  this.termsCheckRef = data.termsCheckRef;
-  this.termsLabelRef = data.termsLabelRef;
-  this.pageOneRef = data.pageOneRef;
-  this.pageTwoRef = data.pageTwoRef;
-  this.pageThreeRef = data.pageThreeRef;
-  this.pageFourRef = data.pageFourRef;
-}
+    this.emailRef = data.emailRef;
+    this.firstNameRef = data.firstNameRef;
+    this.lastNameRef = data.lastNameRef;
+    this.titleRef = data.titleRef;
+    this.firstNameHeaderRef = data.firstNameHeaderRef;
+    this.lastNameHeaderRef = data.lastNameHeaderRef;
+    this.emailHeaderRef = data.emailHeaderRef;
+    this.errorFirstNameRef = data.errorFirstNameRef;
+    this.errorLastNameRef = data.errorLastNameRef;
+    this.errorEmailRef = data.errorEmailRef;
+    this.termsCheckRef = data.termsCheckRef;
+    this.termsLabelRef = data.termsLabelRef;
+    this.pageOneRef = data.pageOneRef;
+    this.pageTwoRef = data.pageTwoRef;
+    this.pageThreeRef = data.pageThreeRef;
+    this.pageFourRef = data.pageFourRef;
+    this.onStart = data.onStart;
+  }
 
   preload() {
     this.load.image('nbaLogo', '/assets/nba-logo.png');
@@ -77,7 +78,9 @@ export class Start extends Phaser.Scene {
     this.scale.on('resize', this.onResize, this);
 
 
-    this.loadIntro();
+    document.fonts.load("24px ArcadeFont").then(() => {
+        this.loadIntro();
+    });
   }
 
   // when game is resized
@@ -465,9 +468,15 @@ export class Start extends Phaser.Scene {
             console.log("Checkbox is not checked");
             }
 
-
             // go to game
-            this.scene.start('GameScene'); 
+            if (typeof this.onStart === "function") {
+                this.onStart({
+                    firstName: this.playerFirstName.trim(),
+                    lastName: this.playerLastName.trim(),
+                    email: this.email.trim(),
+                    acceptedTerms: !!this.termsCheck.checked
+                });
+            }
         }
         // if first name was not filled
         if (!firstNameFilled) {
