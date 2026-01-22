@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import PhaserView from "./components/PhaserView";
+import GameOverScreen from "./GameOverScreen";
 import "./App.css";
 
 import confetti from "canvas-confetti";
@@ -78,7 +79,7 @@ function TriBadge({ value, hint, className = "" }) {
   return <Badge kind="neutral" icon="?" text={value} className={className} />;
 }
 
-export default function Game({ profile, onExitToIntro }) {
+export default function Game({ profile, onShowLeaderboard, onExitToIntro }) {
   const [players, setPlayers] = useState([]);
   const [target, setTarget] = useState(null);
 
@@ -92,6 +93,10 @@ export default function Game({ profile, onExitToIntro }) {
 
   const [statusMsg, setStatusMsg] = useState("");
   const [gameOver, setGameOver] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [leaderboardStatus, setLeaderboardStatus] = useState("idle"); // idle | loading | error | success
 
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -122,10 +127,8 @@ export default function Game({ profile, onExitToIntro }) {
     })();
   }, []);
 
-  // Start first round
   useEffect(() => {
     if (players.length && !target) startNewRound(players);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [players]);
 
   useEffect(() => {
@@ -150,20 +153,19 @@ export default function Game({ profile, onExitToIntro }) {
   }, [activeIndex, showSuggestions, suggestions]);
 
   useEffect(() => {
-    // Start stopwatch immediately on first render
     timerStartRef.current = Date.now();
     setElapsedSec(0);
 
     timerIntervalRef.current = setInterval(() => {
-      const diffMs = Date.now() - timerStartRef.current;
-      setElapsedSec(Math.floor(diffMs / 1000));
+        const diffMs = Date.now() - timerStartRef.current;
+        setElapsedSec(Math.floor(diffMs / 1000));
     }, 250);
 
     return () => {
-      if (timerIntervalRef.current) {
+        if (timerIntervalRef.current) {
         clearInterval(timerIntervalRef.current);
         timerIntervalRef.current = null;
-      }
+        }
     };
   }, []);
 
@@ -179,6 +181,57 @@ export default function Game({ profile, onExitToIntro }) {
     const step = Math.min(rows.length, BLUR_LEVELS.length - 1);
     return BLUR_LEVELS[step];
   }, [rows.length, gameOver]);
+
+  const didWin = useMemo(() => {
+    if (!gameOver || rows.length === 0) return false;
+    return Boolean(rows[rows.length - 1]?.feedback?.nameMatch);
+  }, [gameOver, rows]);
+
+  async function fetchLeaderboard() {
+    setLeaderboardStatus("loading");
+    try {
+      const res = await fetch("/api/leaderboard");
+      if (!res.ok) throw new Error("Leaderboard fetch failed");
+      const data = await res.json();
+      const list = Array.isArray(data)
+        ? data
+        : data?.entries || data?.leaderboard || [];
+      setLeaderboard(list);
+      setLeaderboardStatus("success");
+      return true;
+    } catch (err) {
+      setLeaderboard([]);
+      setLeaderboardStatus("error");
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    if (!showLeaderboard) return;
+    fetchLeaderboard();
+  }, [showLeaderboard]);
+
+  async function submitScore(email, consent) {
+    if (!target) return;
+    const payload = {
+      email,
+      consent,
+      guesses: rows.length,
+      elapsedSec,
+    };
+
+    const res = await fetch("/api/leaderboard", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      throw new Error("Score submit failed");
+    }
+
+    await fetchLeaderboard();
+  }
 
   function hintInInput(message, kind = "error", ms = 1400) {
     setGuessText("");              // clear whatever they typed
@@ -198,6 +251,7 @@ export default function Game({ profile, onExitToIntro }) {
     setRows([]);
     setGuessedIds(new Set());
     setGameOver(false);
+    setShowLeaderboard(false);
     setStatusMsg("");
     setGuessText("");
     setBannerMsg("");
@@ -420,132 +474,155 @@ export default function Game({ profile, onExitToIntro }) {
   }
 
   return (
-    <div className="page">
-      <div className="left card arcadeFrame">
-        <div className="arcadeContent">
-          <h2>Guesses</h2>
-          <table>
-            <thead>
-              <tr>
-                <th style={{ width: "26%" }}>Name</th>
-                <th style={{ width: "12%" }}>Conf</th>
-                <th style={{ width: "10%" }}>Team</th>
-                <th style={{ width: "10%" }}>Pos</th>
-                <th style={{ width: "12%" }}>No.</th>
-                <th style={{ width: "16%" }}>Age</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.from({ length: MAX_GUESSES }).map((_, i) => {
-                const row = rows[i];
-                if (!row) {
-                  return (
-                    <tr key={i}>
-                      <td className="empty">—</td>
-                      <td className="empty">—</td>
-                      <td className="empty">—</td>
-                      <td className="empty">—</td>
-                      <td className="empty">—</td>
-                      <td className="empty">—</td>
-                    </tr>
-                  );
-                }
-
-                const { player, feedback } = row;
-                const posLabel = Array.isArray(player.position) ? player.position.join("/") : player.position;
-
-                return (
-                  <tr
-                    key={i}
-                    className={row.isNew ? "guessRow isNew" : "guessRow"}
-                  >
-                    <td><Badge kind={feedback.nameMatch ? "ok" : "no"} icon={feedback.nameMatch ? "✓" : "✗"} text={player.name} className="badgeAnim" /></td>
-                    <td><Badge kind={feedback.conferenceMatch ? "ok" : "no"} icon={feedback.conferenceMatch ? "✓" : "✗"} text={player.conference} className="badgeAnim" /></td>
-                    <td><Badge kind={feedback.teamMatch ? "ok" : "no"} icon={feedback.teamMatch ? "✓" : "✗"} text={player.team} className="badgeAnim" /></td>
-                    <td><Badge kind={feedback.positionMatch ? "ok" : "no"} icon={feedback.positionMatch ? "✓" : "✗"} text={posLabel} className="badgeAnim" /></td>
-                    <td><TriBadge value={player.number} hint={feedback.numberHint} className="badgeAnim" /></td>
-                    <td><TriBadge value={player.age} hint={feedback.ageHint} className="badgeAnim" /></td>
+    <>
+        <div className="page">
+          <div className="left card arcadeFrame">
+            <div className="arcadeContent">
+              <h2>Guesses</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th style={{ width: "26%" }}>Name</th>
+                    <th style={{ width: "12%" }}>Conf</th>
+                    <th style={{ width: "10%" }}>Team</th>
+                    <th style={{ width: "10%" }}>Pos</th>
+                    <th style={{ width: "12%" }}>No.</th>
+                    <th style={{ width: "16%" }}>Age</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                </thead>
+                <tbody>
+                  {Array.from({ length: MAX_GUESSES }).map((_, i) => {
+                    const row = rows[i];
+                    if (!row) {
+                      return (
+                        <tr key={i}>
+                          <td className="empty">—</td>
+                          <td className="empty">—</td>
+                          <td className="empty">—</td>
+                          <td className="empty">—</td>
+                          <td className="empty">—</td>
+                          <td className="empty">—</td>
+                        </tr>
+                      );
+                    }
 
-      <div className="right">
-        <div className="rightTop">
-          <div className="autoWrap" ref={autoRef}>
-            <input
-              ref={inputRef}
-              value={guessText}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              placeholder={inputHint}
-              className={inputHintKind === "error" ? "inputError" : ""}
-              disabled={gameOver}
-              autoComplete="off"
-              spellCheck={false}
-            />
+                    const { player, feedback } = row;
+                    const posLabel = Array.isArray(player.position) ? player.position.join("/") : player.position;
 
-            {showSuggestions && !gameOver && suggestions.length > 0 && (
-              <div className="suggestions" ref={suggestionsRef}>
-                {suggestions.map((name, idx) => (
-                  <div
-                    key={name}
-                    ref={(el) => (itemRefs.current[idx] = el)}
-                    className={`suggestionItem ${idx === activeIndex ? "active" : ""}`}
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      chooseSuggestion(name, true);
-                    }}
-                  >
-                    {name}
-                  </div>
-                ))}
-              </div>
-            )}
+                    return (
+                      <tr
+                        key={i}
+                        className={row.isNew ? "guessRow isNew" : "guessRow"}
+                      >
+                        <td><Badge kind={feedback.nameMatch ? "ok" : "no"} icon={feedback.nameMatch ? "✓" : "✗"} text={player.name} className="badgeAnim" /></td>
+                        <td><Badge kind={feedback.conferenceMatch ? "ok" : "no"} icon={feedback.conferenceMatch ? "✓" : "✗"} text={player.conference} className="badgeAnim" /></td>
+                        <td><Badge kind={feedback.teamMatch ? "ok" : "no"} icon={feedback.teamMatch ? "✓" : "✗"} text={player.team} className="badgeAnim" /></td>
+                        <td><Badge kind={feedback.positionMatch ? "ok" : "no"} icon={feedback.positionMatch ? "✓" : "✗"} text={posLabel} className="badgeAnim" /></td>
+                        <td><TriBadge value={player.number} hint={feedback.numberHint} className="badgeAnim" /></td>
+                        <td><TriBadge value={player.age} hint={feedback.ageHint} className="badgeAnim" /></td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          {gameOver && (
-            <button className="playAgain" onClick={() => startNewRound()}>
-              See Leaderboard
+          <div className="right">
+            <div className="rightTop">
+              <div className="autoWrap" ref={autoRef}>
+                <input
+                  ref={inputRef}
+                  value={guessText}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                  placeholder={inputHint}
+                  className={inputHintKind === "error" ? "inputError" : ""}
+                  disabled={gameOver}
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+
+                {showSuggestions && !gameOver && suggestions.length > 0 && (
+                  <div className="suggestions" ref={suggestionsRef}>
+                    {suggestions.map((name, idx) => (
+                      <div
+                        key={name}
+                        ref={(el) => (itemRefs.current[idx] = el)}
+                        className={`suggestionItem ${idx === activeIndex ? "active" : ""}`}
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          chooseSuggestion(name, true);
+                        }}
+                      >
+                        {name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              {gameOver && !showLeaderboard && (
+                <button
+                    className="playAgain"
+                    onClick={() => setShowLeaderboard(true)}
+                >
+                    See Leaderboard
+                </button>
+              )}
+            </div>
+
+            {gameOver && bannerMsg && (
+                <div key={bannerMsg} className="winBanner">
+                    {bannerMsg}
+                </div>
+            )}
+
+            <div className="phaserWrap" ref={portraitWrapRef}>
+              <PhaserView playerId={target?.id} blurPx={blurPx} />
+            </div>
+          </div>
+
+          {(showTime || gameOver) && (
+            <div className="stopwatch">
+              {formatHMS(elapsedSec)}
+            </div>
+          )}
+
+          {!gameOver && (
+            <button
+              type="button"
+              className="timeToggle"
+              onClick={() => setShowTime((v) => !v)}
+            >
+              {showTime ? "Hide Time" : "Show Time"}
             </button>
           )}
+
+          <img
+            src="/public/assets/wit-logo.png"
+            alt="WIT"
+            className="witLogo"
+          />
+
+          {showLeaderboard && (
+            <GameOverScreen
+                didWin={didWin}
+                target={target}
+                guessesUsed={rows.length}
+                maxGuesses={MAX_GUESSES}
+                timeText={formatHMS(elapsedSec)}
+                bannerMsg={bannerMsg}
+                leaderboard={leaderboard}
+                leaderboardStatus={leaderboardStatus}
+                onSubmitScore={submitScore}
+                onPlayAgain={() => {
+                  setShowLeaderboard(false);
+                  startNewRound();
+                }}
+                onBackToHome={onExitToIntro}
+            />
+            )}
         </div>
-
-        {gameOver && bannerMsg && (
-          <div key={bannerMsg} className="winBanner">
-            {bannerMsg}
-          </div>
-        )}
-
-        <div className="phaserWrap" ref={portraitWrapRef}>
-          <PhaserView playerId={target?.id} blurPx={blurPx} />
-        </div>
-      </div>
-
-      {(showTime || gameOver) && (
-        <div className="stopwatch">
-          {formatHMS(elapsedSec)}
-        </div>
-      )}
-
-      {!gameOver && (
-        <button
-          type="button"
-          className="timeToggle"
-          onClick={() => setShowTime((v) => !v)}
-        >
-          {showTime ? "Hide Time" : "Show Time"}
-        </button>
-      )}
-
-      <img
-        src="/public/assets/wit-logo.png"
-        alt="WIT"
-        className="witLogo"
-      />
-    </div>
+    </>
   );
 }
