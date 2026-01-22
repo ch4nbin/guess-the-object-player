@@ -126,7 +126,7 @@ export class Start extends Phaser.Scene {
         this.placeNBA(0.95, 0.9, this.nba);
     
         
-        this.title.innerText = 'GUESS THAT PLAYER';
+        this.title.innerText = 'GUESS THE PLAYER';
         this.title.style.color = this.textColor;
         this.title.style.position = 'absolute';
         this.title.style.top = '20%';
@@ -429,7 +429,7 @@ export class Start extends Phaser.Scene {
         && this.email.includes('.');
 
         // if both are filled out properly go to next screen
-        if (firstNameFilled && lastNameFilled && emailFilled) {
+        if (firstNameFilled && lastNameFilled && emailFilled && this.termsCheck.checked) {
             // destroy UI
             this.firstNameText.style.display = "none";
             this.lastNameText.style.display = "none";
