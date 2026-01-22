@@ -98,6 +98,7 @@ export default function Game({ profile, onShowLeaderboard, onExitToIntro }) {
 
   const [leaderboard, setLeaderboard] = useState([]);
   const [leaderboardStatus, setLeaderboardStatus] = useState("idle"); // idle | loading | error | success
+  const [scoreSubmitted, setScoreSubmitted] = useState(false);
 
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -234,6 +235,16 @@ export default function Game({ profile, onShowLeaderboard, onExitToIntro }) {
     await fetchLeaderboard();
   }
 
+  useEffect(() => {
+    if (!showLeaderboard) return;
+    if (scoreSubmitted) return;
+    if (!profile?.email || !profile?.acceptedTerms) return;
+
+    submitScore(profile.email, profile.acceptedTerms)
+      .then(() => setScoreSubmitted(true))
+      .catch(() => {});
+  }, [showLeaderboard, scoreSubmitted, profile, target, elapsedSec, rows.length]);
+
   function hintInInput(message, kind = "error", ms = 1400) {
     setGuessText("");              // clear whatever they typed
     setInputHint(message);         // show message inside input
@@ -253,6 +264,7 @@ export default function Game({ profile, onShowLeaderboard, onExitToIntro }) {
     setGuessedIds(new Set());
     setGameOver(false);
     setShowLeaderboard(false);
+    setScoreSubmitted(false);
     setStatusMsg("");
     setGuessText("");
     setBannerMsg("");
@@ -615,7 +627,6 @@ export default function Game({ profile, onShowLeaderboard, onExitToIntro }) {
                 bannerMsg={bannerMsg}
                 leaderboard={leaderboard}
                 leaderboardStatus={leaderboardStatus}
-                onSubmitScore={submitScore}
                 onPlayAgain={() => {
                   setShowLeaderboard(false);
                   startNewRound();

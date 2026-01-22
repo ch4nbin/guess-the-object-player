@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export default function GameOverScreen({
   didWin,
   target,
@@ -9,15 +7,9 @@ export default function GameOverScreen({
   bannerMsg,
   leaderboard,
   leaderboardStatus,
-  onSubmitScore,
   onPlayAgain,
   onBackToHome
 }) {
-  const [email, setEmail] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [submitState, setSubmitState] = useState("idle"); // idle | submitting | success | error
-  const [submitError, setSubmitError] = useState("");
-
   function maskEmail(value) {
     if (!value || typeof value !== "string") return "Anonymous";
     const [user, domain] = value.split("@");
@@ -44,34 +36,6 @@ export default function GameOverScreen({
   const subtitle = didWin
     ? bannerMsg || "Nice work!"
     : `Out of guesses${target?.name ? ` — it was ${target.name}` : ""}.`;
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setSubmitError("");
-    if (!onSubmitScore) {
-      setSubmitError("Score submission is unavailable.");
-      return;
-    }
-
-    if (!email.includes("@")) {
-      setSubmitError("Enter a valid email to submit.");
-      return;
-    }
-
-    if (!consent) {
-      setSubmitError("Consent is required to submit.");
-      return;
-    }
-
-    try {
-      setSubmitState("submitting");
-      await onSubmitScore(email, consent);
-      setSubmitState("success");
-    } catch (err) {
-      setSubmitState("error");
-      setSubmitError("Submission failed. Try again.");
-    }
-  }
 
   return (
     <div className="gameOverOverlay" role="dialog" aria-modal="true">
@@ -114,49 +78,6 @@ export default function GameOverScreen({
               Back to Home
             </button>
           </div>
-
-          <form className="emailCapture" onSubmit={handleSubmit}>
-            <div className="emailCaptureTitle">Submit your score</div>
-            <label className="emailLabel" htmlFor="emailCaptureInput">
-              Email
-            </label>
-            <input
-              id="emailCaptureInput"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@email.com"
-              className="emailInput"
-              disabled={submitState === "submitting"}
-              required
-            />
-
-            <label className="consentRow">
-              <input
-                type="checkbox"
-                checked={consent}
-                onChange={(e) => setConsent(e.target.checked)}
-                disabled={submitState === "submitting"}
-              />
-              <span>I agree to receive marketing emails.</span>
-            </label>
-
-            {submitError && (
-              <div className="submitError">{submitError}</div>
-            )}
-
-            {submitState === "success" ? (
-              <div className="submitSuccess">Score submitted. Thanks!</div>
-            ) : (
-              <button
-                type="submit"
-                className="gameOverButton"
-                disabled={submitState === "submitting"}
-              >
-                {submitState === "submitting" ? "Submitting..." : "Submit Score"}
-              </button>
-            )}
-          </form>
         </div>
 
         <div className="gameOverRight">
