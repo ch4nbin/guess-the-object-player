@@ -612,7 +612,7 @@ export default function Game({ profile, onShowLeaderboard, onExitToIntro }) {
           )}
 
           <img
-            src="/public/assets/wit-logo.png"
+            src="/assets/wit-logo.png"
             alt="WIT"
             className="witLogo"
           />
