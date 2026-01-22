@@ -1,6 +1,7 @@
 import express from "express";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config();
 
@@ -9,6 +10,7 @@ const port = process.env.PORT || 3001;
 const mongoUri = process.env.MONGODB_URI;
 const dbName = process.env.MONGODB_DB || "wit_arcade";
 const collectionName = process.env.MONGODB_COLLECTION || "leaderboard";
+const corsOrigin = process.env.CORS_ORIGIN || "*";
 
 if (!mongoUri) {
   console.error("Missing MONGODB_URI in .env");
@@ -28,6 +30,11 @@ async function initDb() {
   await collection.createIndex({ email: 1, createdAt: -1 });
 }
 
+app.use(
+  cors({
+    origin: corsOrigin === "*" ? true : corsOrigin.split(",").map((v) => v.trim()),
+  })
+);
 app.use(express.json());
 
 app.get("/api/leaderboard", async (req, res) => {
