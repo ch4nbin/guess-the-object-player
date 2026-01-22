@@ -8,6 +8,7 @@ import confetti from "canvas-confetti";
 
 const MAX_GUESSES = 6;
 const BLUR_LEVELS = [24, 18, 12, 8, 4, 2, 0];
+const API_BASE = import.meta.env.VITE_API_BASE || "";
 
 function normalize(s) {
   return String(s).trim().toLowerCase();
@@ -196,7 +197,7 @@ export default function App() {
   async function fetchLeaderboard() {
     setLeaderboardStatus("loading");
     try {
-      const res = await fetch("/api/leaderboard");
+      const res = await fetch(`${API_BASE}/api/leaderboard`);
       if (!res.ok) throw new Error("Leaderboard fetch failed");
       const data = await res.json();
       const list = Array.isArray(data)
@@ -226,7 +227,7 @@ export default function App() {
       elapsedSec,
     };
 
-    const res = await fetch("/api/leaderboard", {
+    const res = await fetch(`${API_BASE}/api/leaderboard`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
